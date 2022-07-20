@@ -1,0 +1,18 @@
+---
+- name: Patch to run in background
+  ansible.posix.patch:
+    src: start-stratum-container.sh.patch
+    dest: ~/stratum/stratum/hal/bin/barefoot/docker/start-stratum-container.sh
+    remote_src: no
+    state: present
+- name: Launch stratum
+  environment:
+    SDE_VERSION: 9.7.0
+    CHASSIS_CONFIG: /tmp/chassis_config.pb.txt
+  shell: "~/stratum/stratum/hal/bin/barefoot/docker/start-stratum-container.sh -enable_onlp=false -bf_switchd_background=false -experimental_enable_p4runtime_translation -incompatible_enable_bfrt_legacy_bytestring_responses"
+  when:  not custom_stratum_chassis_config.failed
+- name: Launch stratum
+  environment:
+    SDE_VERSION: 9.7.0
+  shell: "~/stratum/stratum/hal/bin/barefoot/docker/start-stratum-container.sh -enable_onlp=false -bf_switchd_background=false -experimental_enable_p4runtime_translation -incompatible_enable_bfrt_legacy_bytestring_responses"
+  when:  custom_stratum_chassis_config.failed

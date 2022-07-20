@@ -1,0 +1,71 @@
+---
+#ansible_user: root
+
+#registry config
+registry_name: DATA+OMITTED
+auth:
+  - login: DATA+OMITTED
+    password: DATA+OMITTED
+  - login: DATA+OMITTED
+    password: DATA+OMITTED
+auth_file: DATA+OMITTED
+path:
+  certificate: DATA+OMITTED
+  authentication: DATA+OMITTED
+
+# k8s config
+kube_config_local_path: DATA+OMITTED
+master: DATA+OMITTED
+k8s:
+  subnet: DATA+OMITTED
+  apiserver_advertise_address: DATA+OMITTED
+
+# calico config
+calico:
+  IP_AUTODETECTION_METHOD: interface=eth1
+
+# Stratum
+stratum:
+  mode: tofino # bmv2 tofino
+  bmv2_user: vagrant
+
+# Fabric
+fabric:
+  profile: fabric # fabric-v1model fabric-tna fabric
+
+# ONOS
+onos:
+  image: onosproject/onos:2.5.8 # opennetworking/sdfabric-onos:stable-2022-07-06
+  mode:  docker # k8s docker
+  applications:
+    - name: org.onosproject.drivers.barefoot
+    - name: org.onosproject.drivers.bmv2
+    - name: org.onosproject.lldpprovider
+    - name: org.onosproject.hostprovider
+    
+netcfg:
+  devices:
+    "device:sopnode-sw1":
+      basic:
+        managementAddress: "grpc://138.96.245.11:9559?device_id=1"
+        driver: "stratum-tofino" # "stratum-bmv2" "stratum-tofino"
+        pipeconf: "org.stratumproject.fabric.mavericks_sde_9_7_0" # "org.stratumproject.fabric.bmv2" "org.stratumproject.fabric.mavericks_sde_9_7_0"
+        locType: "grid"
+        gridX: 200
+        gridY: 600
+    "device:sopnode-sw2":
+      basic:
+        managementAddress: "grpc://138.96.245.12:9559?device_id=1"
+        driver: "stratum-tofino"
+        pipeconf: "org.stratumproject.fabric.montara_sde_9_7_0"
+        locType: "grid"
+        gridX: 400
+        gridY: 400
+    "device:sopnode-sw3":
+      basic:
+        managementAddress: "grpc://138.96.245.13:9559?device_id=1"
+        driver: "stratum-tofino"
+        pipeconf: "org.stratumproject.fabric.mavericks_sde_9_7_0"
+        locType: "grid"
+        gridX: 600
+        gridY: 600

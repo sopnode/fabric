@@ -1,0 +1,5 @@
+---
+- name:  Configure switches as special Kubernetes nodes
+  hosts: fabric_switches
+  roles:
+    - role: fabric-switch

@@ -1,0 +1,6 @@
+---
+- name: Install k8s master
+  hosts: masters
+  roles:
+    - role: k8s-master
+    - role: k8s-ca-certificate

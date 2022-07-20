@@ -1,0 +1,54 @@
+---
+# Stratum
+stratum:
+  mode: bmv2
+  bmv2_user: vagrant
+
+# Fabric
+fabric:
+  profile: fabric-v1model
+
+k8s:
+  subnet: 10.244.0.0/16
+  apiserver_advertise_address: 192.168.34.3
+
+# calico config
+calico:
+  IP_AUTODETECTION_METHOD: interface=eth1
+
+# ONOS
+onos:
+  image: onosproject/onos:2.5.8
+  mode:  k8s
+  applications:
+    - name: org.onosproject.drivers.barefoot
+    - name: org.onosproject.drivers.bmv2
+    - name: org.onosproject.lldpprovider
+    - name: org.onosproject.hostprovider
+    
+netcfg:
+  devices:
+    "device:sw1":
+      basic:
+        managementAddress: "grpc://192.168.34.3:9559?device_id=1"
+        driver: "stratum-bmv2"
+        pipeconf: "org.stratumproject.fabric.bmv2"
+        locType: "grid"
+        gridX: 200
+        gridY: 600
+    "device:sw2":
+      basic:
+        managementAddress: "grpc://192.168.34.4:9559?device_id=1"
+        driver: "stratum-bmv2"
+        pipeconf: "org.stratumproject.fabric.bmv2"
+        locType: "grid"
+        gridX: 400
+        gridY: 400
+    "device:sw3":
+      basic:
+        managementAddress: "grpc://192.168.34.5:9559?device_id=1"
+        driver: "stratum-bmv2"
+        pipeconf: "org.stratumproject.fabric.bmv2"
+        locType: "grid"
+        gridX: 600
+        gridY: 600

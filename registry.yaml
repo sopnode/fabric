@@ -1,0 +1,9 @@
+---
+- name: Deploy docker registry
+  hosts: masters
+  roles:
+    - role: registry
+      vars:
+        certificate_name: '{{ registry_name }}'
+        certificate_path: "{{ path.certificate | default('certificate') }}"
+        authentication_path: "{{ path.authentication | default('authentication') }}"
